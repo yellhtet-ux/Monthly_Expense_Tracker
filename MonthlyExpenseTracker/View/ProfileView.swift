@@ -23,6 +23,8 @@ struct ProfileMainTopView : View {
     @State var name: String = ""
     @State var email: String = ""
     @State var phone: String = ""
+    
+   
     var body: some View {
         HStack (spacing: 10){
             Image("default_profile_img")
@@ -55,45 +57,54 @@ struct ProfileListView: View {
     @State var broughtItemName: String = ""
     @State var broughtPersonName : String = ""
     @State var broughtDate : String = ""
+    
+    let columns = [
+        GridItem(.adaptive(minimum: 170))
+    ]
+    
     var body: some View {
-        List(0..<12) { item in
-                HStack {
-                    VStack {
-                        Text(broughtItemName)
-                            .font(.system(size: 8))
-                            .fontWeight(.bold)
-                        HStack{
-                            Image("person_icon")
-                                .resizable()
-                                .frame(width: 9,height: 9)
-                                .padding(5)
-                            Text(broughtPersonName)
+        
+        ScrollView {
+            LazyVGrid(columns: columns) {
+                ForEach (0..<10,id: \.self) {items in
+                    HStack {
+                        VStack {
+                            Text(broughtItemName)
                                 .font(.system(size: 8))
-                                .foregroundColor(.black)
+                                .fontWeight(.bold)
+                            HStack{
+                                Image("person_icon")
+                                    .resizable()
+                                    .frame(width: 9,height: 9)
+                                    .padding(5)
+                                Text(broughtPersonName)
+                                    .font(.system(size: 8))
+                                    .foregroundColor(.black)
+                            }
+                            .padding(.horizontal)
+                            
+                            HStack {
+                                Image("calendar_icon")
+                                    .resizable()
+                                    .frame(width: 9,height: 9)
+                                Text(broughtDate)
+                                    .font(.system(size: 8))
+                                    .foregroundColor(.black)
+                            }
+                            .padding(.horizontal)
                         }
-                        .padding(.horizontal)
-                        
-                        HStack {
-                            Image("calendar_icon")
-                                .resizable()
-                                .frame(width: 9,height: 9)
-                            Text(broughtDate)
-                                .font(.system(size: 8))
-                                .foregroundColor(.black)
-                        }
-                        .padding(.horizontal)
+                        Spacer()
+                        Image("broughtItems_img")
+                            .resizable()
+                            .renderingMode(.original)
+                            .frame(width: 42,height: 37)
                     }
-                    Spacer()
-                    Image("broughtItems_img")
-                        .resizable()
-                        .renderingMode(.original)
-                        .frame(width: 42,height: 37)
+                    .frame(width: 190,height: 90)
                 }
-                .frame(width: 190,height: 90)
-                    
             }
-            .frame(maxWidth: .infinity,maxHeight: .infinity)
-            .background(Color("profileColor"))
+        }
+        .frame(maxWidth: .infinity,maxHeight: .infinity)
+        .background(Color("profileColor"))
     }
 }
 

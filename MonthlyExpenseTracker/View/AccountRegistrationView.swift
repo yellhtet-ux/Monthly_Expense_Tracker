@@ -10,8 +10,12 @@ import SwiftUI
 struct AccountRegistrationView: View {
     @State private var name: String = ""
     @State private var email: String = ""
+    @State private var password: String = ""
     @State private var phone: String = ""
     @State private var isImageSelected: Bool = false
+    
+    private let viewModel = AccountRegisterViewModel()
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -45,6 +49,17 @@ struct AccountRegistrationView: View {
                         .border(.gray)
                 }
                 
+                VStack {
+                    HStack {
+                        Text("Password")
+                        Spacer()
+                    }
+                    SecureField("", text: $password)
+                        .padding(.all)
+                        .border(.gray)
+                }
+            
+                
                 Spacer()
                 
                 
@@ -58,8 +73,8 @@ struct AccountRegistrationView: View {
                         .border(.gray)
                 }
                 
-                
                 Spacer()
+                
                 VStack {
                     HStack {
                         Text("Photo")
@@ -70,8 +85,10 @@ struct AccountRegistrationView: View {
                         .resizable()
                         .scaledToFit()
                 }
+                
                 Button(action: {
-                    // Your button action
+                    viewModel.createUser(email, password)
+                    viewModel.addUserData(name, phone)
                 }) {
                     Text("Add")
                         .foregroundColor(.black)
