@@ -20,5 +20,9 @@ class AccountRegisterViewModel {
     func addUserData (_ name: String,_ phone: String) {
         dataManager.addUserData(name, phone)
     }
+    
+    func uploadUserProfileImage (_ photo: UIImage?) {
+        dataManager.uploadProfileImage(image: photo)
+    }
 
 }

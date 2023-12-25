@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct AccountRegistrationView: View {
     @State private var name: String = ""
@@ -13,100 +14,134 @@ struct AccountRegistrationView: View {
     @State private var password: String = ""
     @State private var phone: String = ""
     @State private var isImageSelected: Bool = false
+    @State private var selectedImage: UIImage?
     
     private let viewModel = AccountRegisterViewModel()
     
     var body: some View {
-        ScrollView {
-            VStack {
-                HStack {
-                    Text("Account \nRegistration")
-                        .font(.largeTitle)
-                        .multilineTextAlignment(.leading)
-                        .foregroundColor(.black)
+        NavigationView {
+            ScrollView {
+                VStack {
+                    NameTextView
                     Spacer()
+                    EmailTextView
+                    Spacer()
+                    PasswordTextView
+                    Spacer()
+                    PhoneTextView
+                    ImageView
+                    AddButtonView
                 }
+                .padding(.all)
+            }
+            .navigationTitle("Account Registration")
+            .navigationBarTitleDisplayMode(.automatic)
+        }
+    }
+    var NameTextView : some View {
+        VStack {
+            HStack {
+                Text("Name")
                 Spacer()
-                VStack {
-                    HStack {
-                        Text("Name")
-                        Spacer()
-                    }
-                    TextField("", text: $name)
-                        .padding(.all)
-                        .border(.gray)
-                }
+            }
+            TextField("", text: $name) {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            }
+                .padding(.all)
+                .border(.gray)
+        }
+    }
+    
+    var EmailTextView : some View {
+        VStack {
+            HStack {
+                Text("Email")
                 Spacer()
-                
-                
-                VStack {
-                    HStack {
-                        Text("Email")
-                        Spacer()
-                    }
-                    TextField("", text: $email)
-                        .padding(.all)
-                        .border(.gray)
-                }
-                
-                VStack {
-                    HStack {
-                        Text("Password")
-                        Spacer()
-                    }
-                    SecureField("", text: $password)
-                        .padding(.all)
-                        .border(.gray)
-                }
-            
-                
+            }
+            TextField("", text: $email) {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            }
+                .padding(.all)
+                .border(.gray)
+        }
+    }
+    
+    var PasswordTextView : some View {
+        VStack {
+            HStack {
+                Text("Password")
                 Spacer()
-                
-                
-                VStack {
-                    HStack {
-                        Text("Phone")
-                        Spacer()
-                    }
-                    TextField("", text: $phone)
-                        .padding(.all)
-                        .border(.gray)
-                }
-                
+            }
+            SecureField("", text: $password) {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            }
+                .padding(.all)
+                .border(.gray)
+        }
+    }
+    
+    var PhoneTextView : some View {
+        VStack {
+            HStack {
+                Text("Phone")
                 Spacer()
-                
-                VStack {
-                    HStack {
-                        Text("Photo")
-                        Spacer()
-                    }
-                    Image("photoSelectedIcon")
-                        .renderingMode(.original)
-                        .resizable()
-                        .scaledToFit()
-                }
-                
-                Button(action: {
-                    viewModel.createUser(email, password)
-                    viewModel.addUserData(name, phone)
-                }) {
-                    Text("Add")
-                        .foregroundColor(.black)
-                        
-                }
+            }
+            TextField("", text: $phone) {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            }
+                .padding(.all)
+                .border(.gray)
+        }
+    }
+    
+    var ImageView : some View {
+        VStack {
+            HStack {
+                Text("Photo")
+                Spacer()
+            }
+            if selectedImage != nil {
+                Image(uiImage: selectedImage!)
+                    .renderingMode(.original)
+                    .resizable()
+                    .scaledToFit()
+                    .onTapGesture(count: 1, perform: {
+                        isImageSelected.toggle()
+                    })
+                    .sheet(isPresented: $isImageSelected, onDismiss: nil, content: {
+                        ImagePicker(selectedImage: $selectedImage, isImageSelected: $isImageSelected)
+                    })
+            }else {
+                Image("photoSelectedIcon")
+                    .renderingMode(.original)
+                    .resizable()
+                    .scaledToFit()
+                    .onTapGesture(count: 1, perform: {
+                        isImageSelected.toggle()
+                    })
+                    .sheet(isPresented: $isImageSelected, onDismiss: nil, content: {
+                        ImagePicker(selectedImage: $selectedImage, isImageSelected: $isImageSelected)
+                    })
+            }
+        }
+    }
+    
+    var AddButtonView : some View {
+        Button(action: {
+            viewModel.createUser(email, password)
+            viewModel.addUserData(name, phone)
+            viewModel.uploadUserProfileImage(selectedImage)
+        }) {
+            Text("Add")
+                .foregroundColor(.black)
+                .cornerRadius(10)
                 .frame(width: 350,height: 45)
                 .background(Color.orange)
                 .padding(10)
-                .cornerRadius(10)
-                
-            }
-            .padding(.all)
         }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        AccountRegistrationView()
-    }
+#Preview {
+    AccountRegistrationView()
 }

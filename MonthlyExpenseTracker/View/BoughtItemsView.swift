@@ -60,8 +60,6 @@ struct BoughtItemsView: View {
     }
 }
 
-struct BoughtItemsView_Previews: PreviewProvider {
-    static var previews: some View {
-        BoughtItemsView()
-    }
+#Preview {
+    BoughtItemsView()
 }

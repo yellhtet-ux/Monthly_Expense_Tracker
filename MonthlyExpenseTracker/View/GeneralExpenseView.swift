@@ -83,9 +83,6 @@ struct GeneralExpenseAddButtonView: View {
     }
 }
 
-struct GeneralExpenseView_Previews: PreviewProvider {
-    static var previews: some View {
-        GeneralExpenseView()
-    }
+#Preview {
+    GeneralExpenseView()
 }
-
