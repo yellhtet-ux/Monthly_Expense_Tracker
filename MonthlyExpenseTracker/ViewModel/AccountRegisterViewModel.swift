@@ -11,18 +11,9 @@ import FirebaseAuth
 
 
 class AccountRegisterViewModel {
-    private let dataManager = DataManager()
-
-    func createUser (_ email: String,_ password: String) {
-        dataManager.createUser(email, password)
-    }
+    private let authManager = AuthManager()
     
-    func addUserData (_ name: String,_ phone: String) {
-        dataManager.addUserData(name, phone)
+    func registerUser (_ email: String,_ password: String,_ name: String,_ phone: String,_ photo: UIImage?) {
+        authManager.registerUser(email, password, name, phone, photo)
     }
-    
-    func uploadUserProfileImage (_ photo: UIImage?) {
-        dataManager.uploadProfileImage(image: photo)
-    }
-
 }

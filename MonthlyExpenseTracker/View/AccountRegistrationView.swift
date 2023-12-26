@@ -21,7 +21,7 @@ struct AccountRegistrationView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack {
+                VStack(spacing: 15) {
                     NameTextView
                     Spacer()
                     EmailTextView
@@ -31,6 +31,7 @@ struct AccountRegistrationView: View {
                     PhoneTextView
                     ImageView
                     AddButtonView
+                    LoginButtonView
                 }
                 .padding(.all)
             }
@@ -44,11 +45,13 @@ struct AccountRegistrationView: View {
                 Text("Name")
                 Spacer()
             }
-            TextField("", text: $name) {
+            TextField("Name", text: $name) {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             }
-                .padding(.all)
-                .border(.gray)
+            .padding(.horizontal)
+            .frame(height: 45)
+            .background(Color.gray.opacity(0.2))
+            .cornerRadius(12)
         }
     }
     
@@ -58,11 +61,13 @@ struct AccountRegistrationView: View {
                 Text("Email")
                 Spacer()
             }
-            TextField("", text: $email) {
+            TextField("Email", text: $email) {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             }
-                .padding(.all)
-                .border(.gray)
+            .padding(.horizontal)
+            .frame(height: 45)
+            .background(Color.gray.opacity(0.2))
+            .cornerRadius(12)
         }
     }
     
@@ -72,11 +77,13 @@ struct AccountRegistrationView: View {
                 Text("Password")
                 Spacer()
             }
-            SecureField("", text: $password) {
+            SecureField("Password", text: $password) {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             }
-                .padding(.all)
-                .border(.gray)
+            .padding(.horizontal)
+            .frame(height: 45)
+            .background(Color.gray.opacity(0.2))
+            .cornerRadius(12)
         }
     }
     
@@ -86,11 +93,13 @@ struct AccountRegistrationView: View {
                 Text("Phone")
                 Spacer()
             }
-            TextField("", text: $phone) {
+            TextField("Phone", text: $phone) {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             }
-                .padding(.all)
-                .border(.gray)
+            .padding(.horizontal)
+            .frame(height: 45)
+            .background(Color.gray.opacity(0.2))
+            .cornerRadius(12)
         }
     }
     
@@ -128,17 +137,32 @@ struct AccountRegistrationView: View {
     
     var AddButtonView : some View {
         Button(action: {
-            viewModel.createUser(email, password)
-            viewModel.addUserData(name, phone)
-            viewModel.uploadUserProfileImage(selectedImage)
+            
+            viewModel.registerUser(email, password, name, phone, selectedImage)
         }) {
-            Text("Add")
-                .foregroundColor(.black)
-                .cornerRadius(10)
-                .frame(width: 350,height: 45)
-                .background(Color.orange)
+            Text("Register")
                 .padding(10)
+                .frame(width: 350,height: 45)
+                .foregroundColor(.black)
+                .background(Color.orange)
+                .cornerRadius(12)
         }
+    }
+    
+    var LoginButtonView: some View {
+        NavigationLink {
+            LoginView()
+        } label: {
+            Text("Login")
+                .padding(10)
+                .frame(width: 350,height: 45)
+                .foregroundColor(.black)
+                .background(Color.orange)
+                .cornerRadius(12)
+        }
+
+
+     
     }
 }
 
