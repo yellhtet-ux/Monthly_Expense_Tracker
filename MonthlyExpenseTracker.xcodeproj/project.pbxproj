@@ -14,6 +14,7 @@
 		7E0B0A9B2AEE432300FA2531 /* GeneralExpenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0B0A9A2AEE432300FA2531 /* GeneralExpenseView.swift */; };
 		7E0B0AA12AEE455100FA2531 /* BoughtItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0B0AA02AEE455100FA2531 /* BoughtItemsView.swift */; };
 		7E0B0AA32AEE47B400FA2531 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0B0AA22AEE47B400FA2531 /* ProfileView.swift */; };
+		7E520BA22B3C694100B4D1FE /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E520BA12B3C694100B4D1FE /* Utility.swift */; };
 		7EC6808F2B38913F005DC128 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7EC6808E2B38913F005DC128 /* GoogleService-Info.plist */; };
 		7EC680912B38935C005DC128 /* AccountRegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC680902B38935C005DC128 /* AccountRegisterViewModel.swift */; };
 		7EC680932B389C4D005DC128 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC680922B389C4D005DC128 /* Test.swift */; };
@@ -50,6 +51,7 @@
 		7E0B0A9A2AEE432300FA2531 /* GeneralExpenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralExpenseView.swift; sourceTree = "<group>"; };
 		7E0B0AA02AEE455100FA2531 /* BoughtItemsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoughtItemsView.swift; sourceTree = "<group>"; };
 		7E0B0AA22AEE47B400FA2531 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		7E520BA12B3C694100B4D1FE /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		7EC6808E2B38913F005DC128 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7EC680902B38935C005DC128 /* AccountRegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRegisterViewModel.swift; sourceTree = "<group>"; };
 		7EC680922B389C4D005DC128 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 		7E0B0A442AE4303B00FA2531 = {
 			isa = PBXGroup;
 			children = (
+				7E520BA02B3C693000B4D1FE /* Utility */,
 				7EF2CA242B3B41D8008534C5 /* LaunchScreen.storyboard */,
 				7E0B0A4F2AE4303B00FA2531 /* MonthlyExpenseTracker */,
 				7E0B0A4E2AE4303B00FA2531 /* Products */,
@@ -141,6 +144,14 @@
 				7EC680922B389C4D005DC128 /* Test.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		7E520BA02B3C693000B4D1FE /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				7E520BA12B3C694100B4D1FE /* Utility.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 		7EC680982B38A970005DC128 /* Frameworks */ = {
@@ -275,6 +286,7 @@
 				7E0B0AA32AEE47B400FA2531 /* ProfileView.swift in Sources */,
 				7EC680932B389C4D005DC128 /* Test.swift in Sources */,
 				7E0B0AA12AEE455100FA2531 /* BoughtItemsView.swift in Sources */,
+				7E520BA22B3C694100B4D1FE /* Utility.swift in Sources */,
 				7EC680A32B39CA06005DC128 /* ImagePicker.swift in Sources */,
 				7EF2CA232B3B3DC1008534C5 /* LoginViewModel.swift in Sources */,
 				7EF2CA212B3B0D7A008534C5 /* LoginView.swift in Sources */,

@@ -11,17 +11,12 @@ import FirebaseAuth
 import FirebaseStorage
 
 class AuthManager : ObservableObject {
-    private var randomImageID : Int {
-        let randomNumber = Int.random(in: 0..<100)
-        return randomNumber
-    }
-    
-    private let userID : String = UUID().uuidString
+    private let id : String = UUID().uuidString
     
     // MARK: - Sign Up
     
     func registerUser (_ email: String,_ password: String,_ name: String,_ phone: String,_ photo: UIImage?) {
-        let path = "images/\(randomImageID)_img.jpg"
+        let path = "images/\(id)_img.jpg"
         let storageRef = Storage.storage().reference()
         guard let image = photo else {return}
         let imageOptData = image.jpegData(compressionQuality: 0.8)
@@ -40,7 +35,7 @@ class AuthManager : ObservableObject {
                 
                 let db = Firestore.firestore()
                 let ref = db.collection("User").addDocument(data: ["name": name,"phone": phone,"photo": path])
-                ref.setData(["id": self.userID,"name": name,"phone": phone,"photo": path]) {error in
+                ref.setData(["id": self.id,"name": name,"phone": phone,"photo": path]) {error in
                     if let error = error {
                         print(error.localizedDescription)
                     }

@@ -14,9 +14,15 @@ struct AccountRegistrationView: View {
     @State private var password: String = ""
     @State private var phone: String = ""
     @State private var isImageSelected: Bool = false
+    @State private var isEmailValid: Bool = true
+    @State private var isPasswordValid: Bool = true
+    @State private var isPhoneValid: Bool = true
+    @State private var isAlertShow: Bool = false
+    @State private var alertMessage: String = ""
     @State private var selectedImage: UIImage?
     
     private let viewModel = AccountRegisterViewModel()
+    private let utility = Utility.shared
     
     var body: some View {
         NavigationView {
@@ -30,9 +36,16 @@ struct AccountRegistrationView: View {
                     Spacer()
                     PhoneTextView
                     ImageView
-                    AddButtonView
+                    RegisterButtonView
                     LoginButtonView
                 }
+                .alert(isPresented: $isAlertShow) {
+                            Alert(
+                                title: Text("Validation Error"),
+                                message: Text(alertMessage),
+                                dismissButton: .default(Text("OK"))
+                            )
+                        }
                 .padding(.all)
             }
             .navigationTitle("Account Registration")
@@ -45,7 +58,7 @@ struct AccountRegistrationView: View {
                 Text("Name")
                 Spacer()
             }
-            TextField("Name", text: $name) {
+            TextField("", text: $name) {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             }
             .padding(.horizontal)
@@ -61,13 +74,22 @@ struct AccountRegistrationView: View {
                 Text("Email")
                 Spacer()
             }
-            TextField("Email", text: $email) {
+            TextField("", text: $email) {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             }
+            .autocapitalization(.none)
             .padding(.horizontal)
             .frame(height: 45)
             .background(Color.gray.opacity(0.2))
             .cornerRadius(12)
+            .onChange(of: email) { newValue in
+                isEmailValid = utility.isValidEmail(newValue)
+            }
+            if !isEmailValid {
+                Text("Please enter a valid email address.")
+                    .foregroundColor(.red)
+                    .padding(.top, 4)
+            }
         }
     }
     
@@ -77,13 +99,22 @@ struct AccountRegistrationView: View {
                 Text("Password")
                 Spacer()
             }
-            SecureField("Password", text: $password) {
+            SecureField("", text: $password) {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             }
+            .autocapitalization(.none)
             .padding(.horizontal)
             .frame(height: 45)
             .background(Color.gray.opacity(0.2))
             .cornerRadius(12)
+            .onChange(of: password) { newValue in
+                isPasswordValid = newValue.count >= 6
+            }
+            if !isPasswordValid {
+                Text("Password must be at least 6 characters long.")
+                    .foregroundColor(.red)
+                    .padding(.top, 4)
+            }
         }
     }
     
@@ -93,13 +124,23 @@ struct AccountRegistrationView: View {
                 Text("Phone")
                 Spacer()
             }
-            TextField("Phone", text: $phone) {
+            TextField("", text: $phone) {
                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
             }
+            .keyboardType(.numberPad)
             .padding(.horizontal)
             .frame(height: 45)
             .background(Color.gray.opacity(0.2))
             .cornerRadius(12)
+            .onChange(of: phone ) { newValue in
+                isPhoneValid = newValue.count == 11
+            }
+            
+            if !isPhoneValid {
+                Text("Please Enter Your Valid Phone Number")
+                    .foregroundColor(.red)
+                    .padding(.top,4)
+            }
         }
     }
     
@@ -135,10 +176,20 @@ struct AccountRegistrationView: View {
         }
     }
     
-    var AddButtonView : some View {
+    var RegisterButtonView : some View {
+        
         Button(action: {
-            
-            viewModel.registerUser(email, password, name, phone, selectedImage)
+            if isEmailValid && isPasswordValid {
+                viewModel.registerUser(email, password, name, phone, selectedImage)
+            }else {
+                if !isEmailValid {
+                    showAlert("Your Email Format is not correct!")
+                }else if !isPasswordValid {
+                    showAlert("Your Password must have at least 6 Characters!")
+                }else if !isPhoneValid {
+                    showAlert("Your Phone Number must be 11 Characters!")
+                }
+            }
         }) {
             Text("Register")
                 .padding(10)
@@ -160,9 +211,11 @@ struct AccountRegistrationView: View {
                 .background(Color.orange)
                 .cornerRadius(12)
         }
-
-
-     
+    }
+    
+    func showAlert (_ message: String) {
+        self.alertMessage = message
+        isAlertShow = true
     }
 }
 
